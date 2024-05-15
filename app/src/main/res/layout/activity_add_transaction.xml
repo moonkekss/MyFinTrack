@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTransactionActivity">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="Back Button"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Add Transaction"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <!-- Transaction Form -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="508dp"
+        android:layout_below="@id/header"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="151dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/inputAmount"
+            android:layout_width="381dp"
+            android:layout_height="80dp"
+            android:hint="Amount"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/inputDate"
+            android:layout_width="383dp"
+            android:layout_height="84dp"
+            android:hint="Date"
+            android:inputType="date" />
+
+        <Spinner
+            android:id="@+id/inputCategory"
+            android:layout_width="383dp"
+            android:layout_height="66dp"/>
+
+        <EditText
+            android:id="@+id/inputNotes"
+            android:layout_width="382dp"
+            android:layout_height="74dp"
+            android:hint="Notes"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="383dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="16dp"
+            android:text="Save" />
+    </LinearLayout>
+
+</RelativeLayout>
