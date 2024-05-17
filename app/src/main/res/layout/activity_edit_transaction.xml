@@ -3,85 +3,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTransactionActivity">
+    tools:context=".EditTransactionActivity">
 
-    <!-- Header Section -->
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:contentDescription="Back Button"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back Button" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Add Transaction"
+            android:text="Edit Transaction"
+            android:textSize="20sp"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:gravity="center" />
     </LinearLayout>
 
-    <!-- Transaction Form -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="508dp"
         android:layout_below="@id/header"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="151dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
         <EditText
             android:id="@+id/inputDescription"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="wrap_content"
             android:hint="Description"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/inputAmount"
-            android:layout_width="381dp"
-            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Amount"
             android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/inputDate"
-            android:layout_width="383dp"
-            android:layout_height="84dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Date"
             android:inputType="date" />
 
         <Spinner
             android:id="@+id/inputCategory"
-            android:layout_width="383dp"
-            android:layout_height="66dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/inputNotes"
-            android:layout_width="382dp"
-            android:layout_height="74dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Notes"
             android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/saveButton"
-            android:layout_width="383dp"
-            android:layout_height="82dp"
-            android:layout_marginTop="16dp"
-            android:text="Save" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 
 </RelativeLayout>

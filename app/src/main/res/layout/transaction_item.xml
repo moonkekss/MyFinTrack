@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/transactionDescription"
-        android:layout_width="0dp"
+        android:layout_width="19dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Transaction Description"
@@ -17,7 +17,28 @@
         android:id="@+id/transactionAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$XX.XX"
+        android:text="Amount"
         android:textSize="16sp"
         android:textColor="@android:color/holo_red_dark" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
 </LinearLayout>

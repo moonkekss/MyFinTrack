@@ -1,6 +1,7 @@
 package com.example.myfintrack;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -8,10 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.concurrent.Executors;
 
 public class AddTransactionActivity extends AppCompatActivity {
 
-    private EditText inputAmount, inputDate, inputNotes;
+    private EditText inputDescription, inputAmount, inputDate, inputNotes;
     private Spinner inputCategory;
     private Button saveButton;
 
@@ -22,6 +24,7 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         // Initialize UI components
         ImageView backButton = findViewById(R.id.backButton);
+        inputDescription = findViewById(R.id.inputDescription);
         inputAmount = findViewById(R.id.inputAmount);
         inputDate = findViewById(R.id.inputDate);
         inputCategory = findViewById(R.id.inputCategory);
@@ -47,17 +50,44 @@ public class AddTransactionActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle saving the transaction
-                // Example: Save transaction to the database
-                // String amount = inputAmount.getText().toString();
-                // String date = inputDate.getText().toString();
-                // String category = inputCategory.getSelectedItem().toString();
-                // String notes = inputNotes.getText().toString();
-                // Save to database logic here...
-
-                // For now, simply finish the activity
-                finish();
+                saveTransaction();
             }
         });
     }
+
+    private void saveTransaction() {
+        String description = inputDescription.getText().toString();
+        String amountStr = inputAmount.getText().toString();
+        if (amountStr.isEmpty()) {
+            inputAmount.setError("Amount is required");
+            inputAmount.requestFocus();
+            return;
+        }
+        double amount = Double.parseDouble(amountStr);
+        String date = inputDate.getText().toString();
+        String category = inputCategory.getSelectedItem().toString();
+        String notes = inputNotes.getText().toString();
+
+        Transaction transaction = new Transaction();
+        transaction.setDescription(description);
+        transaction.setAmount(amount);
+        transaction.setDate(date);
+        transaction.setCategory(category);
+        transaction.setNotes(notes);
+
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                AppDatabase.getInstance(getApplicationContext()).transactionDao().insert(transaction);
+                Log.d("AddTransactionActivity", "Transaction saved: " + transaction);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                });
+            }
+        });
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.myfintrack;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,11 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recentTransactions;
     private TransactionAdapter transactionAdapter;
-    private ArrayList<Transaction> transactionList;
+    private List<Transaction> transactionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +26,9 @@ public class MainActivity extends AppCompatActivity {
         recentTransactions = findViewById(R.id.recentTransactions);
         recentTransactions.setLayoutManager(new LinearLayoutManager(this));
 
-        // Placeholder data
-        transactionList = new ArrayList<>();
-        transactionList.add(new Transaction("Groceries", "$50.00"));
-        transactionList.add(new Transaction("Rent", "$1200.00"));
-
-        transactionAdapter = new TransactionAdapter(transactionList);
+        transactionAdapter = new TransactionAdapter(this,transactionList);
         recentTransactions.setAdapter(transactionAdapter);
+
 
         Button addTransactionButton = findViewById(R.id.addTransactionButton);
         addTransactionButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +68,31 @@ public class MainActivity extends AppCompatActivity {
                 // Start SettingsActivity
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
+            }
+        });
+        loadTransactions();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTransactions();
+    }
+
+    private void loadTransactions() {
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                transactionList = AppDatabase.getInstance(getApplicationContext()).transactionDao().getAllTransactions();
+                for (Transaction transaction : transactionList) {
+                    Log.d("MainActivity", "Transaction retrieved: " + transaction);
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        transactionAdapter.setTransactionList(transactionList);
+                        transactionAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
