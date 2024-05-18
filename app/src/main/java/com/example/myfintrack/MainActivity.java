@@ -6,12 +6,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recentTransactions;
@@ -71,11 +75,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         loadTransactions();
+        scheduleTestNotification();
     }
     @Override
     protected void onResume() {
         super.onResume();
         loadTransactions();
+    }
+    private void scheduleTestNotification() {
+        OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                .setInitialDelay(10, TimeUnit.SECONDS)
+                .build();
+        WorkManager.getInstance(this).enqueue(notificationWork);
     }
 
     private void loadTransactions() {
